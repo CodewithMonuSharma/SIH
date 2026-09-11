@@ -25,7 +25,7 @@ class SimConfig:
     
     # Beacon / Target Parameters
     target_type: str = "Beacon Spot"
-    target_shape: str = "square"
+    target_shape: str = "circle"
     target_size_px: int = 10
     target_color_intensity: int = 255
     

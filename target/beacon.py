@@ -8,7 +8,7 @@ class BeaconRenderer:
     Renders a bright optical beacon spot (default square, 10x10 px) into the
     environment canvas at the target's current ground-truth position (x, y).
     """
-    def __init__(self, shape: str = "square", size_px: int = 10, intensity: int = 255):
+    def __init__(self, shape: str = "circle", size_px: int = 10, intensity: int = 255):
         self.shape = shape
         self.size_px = max(5, min(20, size_px))  # Clamped to PS range 5-20 px
         self.intensity = intensity

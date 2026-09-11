@@ -1,0 +1,197 @@
+/* ========================================================================= */
+/* OptiTrack — FSOC Coarse Alignment Mission Control Theme Stylesheet        */
+/* ========================================================================= */
+
+/* --- Light Mode CSS Variables --- */
+:root {
+  --bg-color: #F0F2F5;
+  --text-main: #1B1F27;
+  --text-sub: #6B7280;
+  --panel-bg: #FFFFFF;
+  --panel-border: #D8DCE3;
+  --accent-teal: #0F9E85;
+  --accent-teal-glow: rgba(15, 158, 133, 0.35);
+  --accent-amber: #D97706;
+  --accent-emerald: #1FAE64;
+  --input-bg: #F7F8FA;
+  --header-bg: rgba(255, 255, 255, 0.95);
+  --hud-bracket-color: #0F9E85;
+}
+
+/* --- Dark Space Mode (When body has .theme-dark or html.dark) --- */
+body.theme-dark {
+  --bg-color: #0A0E14;
+  --text-main: #F2F3F5;
+  --text-sub: #8A8F9A;
+  --panel-bg: #141A24;
+  --panel-border: rgba(31, 230, 196, 0.22);
+  --accent-teal: #1FE6C4;
+  --accent-teal-glow: rgba(31, 230, 196, 0.45);
+  --accent-amber: #FFCF5C;
+  --accent-emerald: #3DDC84;
+  --input-bg: #0F151F;
+  --header-bg: rgba(15, 21, 31, 0.95);
+  --hud-bracket-color: #1FE6C4;
+  background-color: #0A0E14 !important;
+  color: #F2F3F5 !important;
+}
+
+/* Base Hex Grid Background Pattern */
+.bg-hex-pattern {
+  background-color: #0A0E14;
+  background-image: 
+    radial-gradient(1.5px 1.5px at 40px 60px, rgba(242, 243, 245, 0.65), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 150px 220px, rgba(31, 230, 196, 0.55), rgba(0,0,0,0)),
+    radial-gradient(1.2px 1.2px at 310px 140px, rgba(242, 243, 245, 0.5), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 500px 380px, rgba(255, 207, 92, 0.4), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 720px 190px, rgba(242, 243, 245, 0.7), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 940px 420px, rgba(31, 230, 196, 0.45), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 1120px 80px, rgba(242, 243, 245, 0.55), rgba(0,0,0,0)),
+    radial-gradient(1.3px 1.3px at 1380px 290px, rgba(242, 243, 245, 0.6), rgba(0,0,0,0)),
+    linear-gradient(to right, rgba(31, 230, 196, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(31, 230, 196, 0.035) 1px, transparent 1px);
+  background-size: 550px 550px, 450px 450px, 600px 600px, 700px 700px, 800px 800px, 650px 650px, 500px 500px, 750px 750px, 32px 32px, 32px 32px;
+}
+
+body.theme-light {
+  background-color: #F0F2F5;
+  background-image: 
+    radial-gradient(1px 1px at 40px 60px, rgba(15, 158, 133, 0.15), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 200px 300px, rgba(15, 158, 133, 0.1), rgba(0,0,0,0)),
+    linear-gradient(to right, rgba(216, 220, 227, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(216, 220, 227, 0.4) 1px, transparent 1px);
+  background-size: 400px 400px, 500px 500px, 32px 32px, 32px 32px;
+  color: #1B1F27;
+}
+
+/* Theme Dependent Dynamic Utility Classes */
+.text-contrast {
+  color: var(--text-main);
+}
+.theme-dark .header-bar,
+.theme-dark .footer-bar,
+.theme-dark .view-panel,
+.theme-dark .view-header,
+.theme-dark .control-deck,
+.theme-dark .control-header,
+.theme-dark .stat-card,
+.theme-dark .export-section,
+.theme-dark .dark-modal {
+  background-color: var(--panel-bg) !important;
+  border-color: var(--panel-border) !important;
+  color: var(--text-main) !important;
+}
+
+.theme-dark .logo-text,
+.theme-dark .panel-title,
+.theme-dark .deck-title {
+  color: #FFFFFF !important;
+}
+
+.theme-dark .sub-logo-text,
+.theme-dark .panel-subtitle {
+  color: var(--text-sub) !important;
+}
+
+.theme-dark .input-box,
+.theme-dark .dark-control-group,
+.theme-dark .mode-toggle-wrapper {
+  background-color: var(--input-bg) !important;
+  border-color: var(--panel-border) !important;
+  color: var(--text-main) !important;
+}
+
+.theme-dark .badge-scale {
+  background-color: var(--input-bg) !important;
+  color: #1FE6C4 !important;
+  border-color: rgba(31, 230, 196, 0.3) !important;
+}
+
+.theme-dark .section-heading {
+  color: #E2E8F0 !important;
+}
+
+.theme-dark .divider-line {
+  background-color: rgba(31, 230, 196, 0.25) !important;
+}
+
+/* Sci-Fi HUD Corner Brackets */
+.hud-panel {
+  position: relative;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.hud-panel::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: -1px; width: 8px; height: 8px;
+  border-top: 2px solid var(--hud-bracket-color);
+  border-left: 2px solid var(--hud-bracket-color);
+  pointer-events: none;
+  z-index: 10;
+}
+.hud-panel::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; right: -1px; width: 8px; height: 8px;
+  border-bottom: 2px solid var(--hud-bracket-color);
+  border-right: 2px solid var(--hud-bracket-color);
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Sliders */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: rgba(15, 158, 133, 0.25);
+  border-radius: 2px;
+  outline: none;
+}
+.theme-dark input[type=range] {
+  background: rgba(31, 230, 196, 0.22);
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-teal);
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--accent-teal-glow);
+  border: 2px solid #0A0E14;
+  transition: transform 0.1s ease;
+}
+input[type=range]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(10, 14, 20, 0.1);
+}
+.theme-dark ::-webkit-scrollbar-track {
+  background: rgba(10, 14, 20, 0.6);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(15, 158, 133, 0.35);
+  border-radius: 3px;
+}
+.theme-dark ::-webkit-scrollbar-thumb {
+  background: rgba(31, 230, 196, 0.25);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-teal);
+}
+
+/* Canvas Display Fit */
+#sceneOverviewCanvas, #cameraFeedCanvas {
+  background-color: transparent;
+  display: block;
+}

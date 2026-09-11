@@ -1,11 +1,36 @@
 import sys
 import argparse
 import time
+import os
+import webbrowser
 import cv2
 import numpy as np
 from config.schemas import SimConfig
 from runner.simulator import SimulationRunner
 from environment.motion import StraightLineMotion, CircularMotion
+
+def launch_web_mission_control():
+    """
+    Launches the OptiTrack Web Server and opens http://localhost:8080/index.html
+    automatically in the browser to show the full Mission Control Dashboard screen.
+    """
+    from server import main as run_server
+    print("\n" + "=" * 75)
+    print(" OPTITRACK — FSOC COARSE ALIGNMENT MISSION CONTROL")
+    print(" Sat-to-UAV Coarse Alignment Simulator & Web Telemetry Server")
+    print("=" * 75)
+    print(" [+] Starting Live Server & Opening Web Dashboard in Browser...")
+    print(" [+] URL: http://localhost:8080/index.html\n")
+    
+    # Auto-open browser after 0.8 seconds
+    def _open_browser():
+        time.sleep(0.8)
+        webbrowser.open("http://localhost:8080/index.html")
+    
+    import threading
+    threading.Thread(target=_open_browser, daemon=True).start()
+    
+    run_server()
 
 def run_cli_mode():
     """Fallback lightweight OpenCV window mode."""
@@ -31,7 +56,7 @@ def run_cli_mode():
     try:
         while True:
             t0 = time.time()
-            frame, obs, error_res, (pan_cmd, tilt_cmd) = runner.step(dt)
+            frame, obs, error_res, (pan_cmd, tilt_cmd), current_state = runner.step(dt)
             frame_count += 1
 
             img_bgr = cv2.cvtColor(frame.image, cv2.COLOR_GRAY2BGR)
@@ -93,25 +118,35 @@ def run_cli_mode():
     finally:
         cv2.destroyAllWindows()
 
+def run_desktop_gui():
+    """Desktop PySide6 GUI window mode."""
+    try:
+        from PySide6.QtWidgets import QApplication, QDialog
+        from ui.main_window import CoarsePATMainWindow
+        from ui.config_dialog import SimulationConfigDialog
+
+        app = QApplication(sys.argv)
+        config = SimConfig()
+        window = CoarsePATMainWindow(config=config)
+        window.show()
+        sys.exit(app.exec())
+    except Exception as e:
+        print(f"[Warning] Desktop GUI error ({e}). Launching Web Mission Control...")
+        launch_web_mission_control()
+
 def main():
-    parser = argparse.ArgumentParser(description="CoarsePAT-Sim (ISRO PS 26169)")
-    parser.add_argument("--cli", action="store_true", help="Run in OpenCV CLI mode instead of PySide6 Desktop GUI")
+    parser = argparse.ArgumentParser(description="OptiTrack — FSOC Coarse Alignment Mission Control")
+    parser.add_argument("--gui", action="store_true", help="Run in PySide6 Desktop GUI mode")
+    parser.add_argument("--cli", action="store_true", help="Run in lightweight OpenCV CLI mode")
     args = parser.parse_args()
 
-    if args.cli:
+    if args.gui:
+        run_desktop_gui()
+    elif args.cli:
         run_cli_mode()
     else:
-        try:
-            from PySide6.QtWidgets import QApplication
-            from ui.main_window import CoarsePATMainWindow
-
-            app = QApplication(sys.argv)
-            window = CoarsePATMainWindow()
-            window.show()
-            sys.exit(app.exec())
-        except Exception as e:
-            print(f"[Warning] PySide6 GUI launch error ({e}). Falling back to OpenCV CLI mode...")
-            run_cli_mode()
+        # Default: Launch Web Mission Control Dashboard Screen
+        launch_web_mission_control()
 
 if __name__ == "__main__":
     main()

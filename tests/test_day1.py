@@ -91,7 +91,7 @@ def test_closed_loop_simulator_convergence():
     dt = 1.0 / 30.0
     final_error = None
     for _ in range(100):
-        frame, obs, error_res, cmds = runner.step(dt)
+        frame, obs, error_res, cmds, state = runner.step(dt)
         if error_res:
             final_error = error_res
 

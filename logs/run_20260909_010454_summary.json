@@ -1,0 +1,13 @@
+{
+  "total_frames": 300,
+  "simulation_duration_sec": 3.19,
+  "fps": 94.2,
+  "acquisition_time_sec": 0.1,
+  "reacquisition_time_sec": null,
+  "mean_tracking_error_px": 16.43,
+  "max_tracking_error_px": 30.58,
+  "rmse_px": 17.25,
+  "target_loss_percent": 0.0,
+  "lock_retention_rate_percent": 99.0,
+  "avg_processing_latency_ms": 10.46
+}

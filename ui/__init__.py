@@ -1,4 +1,15 @@
 from .main_window import CoarsePATMainWindow
-from .widgets import WorldMapWidget, MetricCard
+from .config_dialog import SimulationConfigDialog
+from .widgets import VirtualArenaRadarMap, SleekMetricCard, TopMetricPill, WorldMapWidget, MetricCard
 
-__all__ = ["CoarsePATMainWindow", "WorldMapWidget", "MetricCard"]
+__all__ = [
+    "CoarsePATMainWindow",
+    "SimulationConfigDialog",
+    "VirtualArenaRadarMap",
+    "SleekMetricCard",
+    "TopMetricPill",
+    "WorldMapWidget",
+    "MetricCard"
+]
+
+
